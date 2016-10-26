@@ -9,3 +9,4 @@ RUN apk -U add python py-pip swig openssl-dev build-base python-dev libusb \
 EXPOSE 5556
 
 ENTRYPOINT ["firetv-server"]
+CMD ["-c /devices.yaml"]
