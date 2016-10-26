@@ -1,5 +1,5 @@
 FROM alpine
-MAINTAINER Kevin Eye <kevineye@gmail.com>
+MAINTAINER Chris C <chris@arraylabs.com>
 
 VOLUME /config
 
