@@ -1,6 +1,8 @@
 FROM alpine
 MAINTAINER Kevin Eye <kevineye@gmail.com>
 
+VOLUME /config
+
 RUN apk -U add python py-pip swig openssl-dev build-base python-dev libusb \
  && pip install flask pyyaml https://github.com/arraylabs/python-firetv/archive/master.zip \
  && apk --purge del swig openssl-dev build-base python-dev \
@@ -9,4 +11,4 @@ RUN apk -U add python py-pip swig openssl-dev build-base python-dev libusb \
 EXPOSE 5556
 
 ENTRYPOINT ["firetv-server"]
-CMD ["-c /devices.yaml"]
+CMD ["-c /config/devices.yaml"]
