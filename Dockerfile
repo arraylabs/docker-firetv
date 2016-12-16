@@ -1,14 +1,18 @@
-FROM alpine
-MAINTAINER Chris C <chris@arraylabs.com>
+FROM python:2
+MAINTAINER Chris C.
 
-VOLUME /config
+RUN apt-get update && apt-get install -y \
+        libssl-dev \
+        libusb-1.0-0 \
+        python-dev \
+        swig \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN apk -U add python py-pip swig openssl-dev build-base python-dev libusb \
- && pip install flask pyyaml https://github.com/arraylabs/python-firetv/archive/master.zip \
- && apk --purge del swig openssl-dev build-base python-dev \
- && rm -rf /var/cache/apk/* /lib/apk/db/*
+RUN pip --no-cache-dir install --upgrade pip
+RUN pip --no-cache-dir install flask
+RUN pip --no-cache-dir install https://pypi.python.org/packages/source/M/M2Crypto/M2Crypto-0.24.0.tar.gz
+RUN pip --no-cache-dir install firetv[firetv-server] --process-dependency-links
 
-EXPOSE 5556
-
-ENTRYPOINT ["firetv-server"]
-CMD ["-c", "/config/devices.yaml"]
+CMD [ "firetv-server" ]
